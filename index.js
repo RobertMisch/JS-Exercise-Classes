@@ -149,6 +149,10 @@ class Instructor extends Lambdasian{
   grade(student, subject){
     return `${student.name} receives a perfect score on ${subject}`
   }
+
+  changeGrade(student){
+    return student.grade+= (Math.floor((Math.random() * 10) + 1) * (Math.round((Math.random()*2) - 1)))
+  }
 }
 
 /*
@@ -172,6 +176,8 @@ class Student extends Lambdasian{
     this.previousBackground = attributes.previousBackground;
     this.className = attributes.className;
     this.favSubjects = attributes.favSubjects;
+    this.grade = Math.floor((Math.random() * 100) + 1);
+    this.continue=true;
   }
 
   listSubjects(){
@@ -183,7 +189,46 @@ class Student extends Lambdasian{
   sprintChallenge(subject){
     return `${this.name} has begun sprint challenge on ${subject}`
   }
+  graduate(){
+    while(this.continue===true){
+        if(this.grade >= 70){
+        this.continue= false;
+        
+      }else{
+        console.log('Not yet, keep at it!');
+        this.grade+= (Math.floor((Math.random() * 10) + 1) * (Math.round((Math.random()*2) - 1)));
+      }
+    }
+
+    return 'alright, you can graduate'
+  }
 }
+
+const myStudent = new Student({
+    name: 'tim',
+    age : 21,
+    location : 'USA',
+    previousBackground : 'Java',
+    className : 'css',
+    favSubjects : 'js'
+})
+
+const myInstructor = new Instructor({
+    name: 'ace',
+    age : 42,
+    location : 'north',
+    specialty : 'js',
+    favLanguage : 'js2boogaloo',
+    catchPhrase : 'just get good'
+})
+
+// console.log(myStudent.grade);
+
+// console.log(myInstructor.changeGrade(myStudent));
+
+// console.log(myStudent.grade);
+
+console.log(myStudent.graduate());
 
 /*
   TASK 6
@@ -198,8 +243,18 @@ class Student extends Lambdasian{
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {
-  
+class ProjectManager extends Instructor{
+  constructor(attributes){
+    super(attributes),
+    this.gradClassName = attributes.gradClassName,
+    this.favInstructor = attributes.favInstructor
+  }
+  standUp(channel){
+   return `${this.name} announces to ${channel}, @channel standy times!`
+  }
+  debugsCode(student, subject){
+    return `${this.name} debugs ${student.name}'s code on ${subject}`
+  }
 }
 
 /*
